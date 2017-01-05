@@ -1,0 +1,18 @@
+<resources>
+    <!-- General activity dimensions -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- Splash activity dimensions -->
+    <dimen name="splash_padding">72dp</dimen>
+    <dimen name="splash_text_size">28sp</dimen>
+
+    <!-- Row comicDomain list dimens -->
+    <dimen name="row_comic_vertical_margin">8dp</dimen>
+    <dimen name="row_comic_horizontal_margin">16dp</dimen>
+    <dimen name="row_comic_height">72dp</dimen>
+    <dimen name="row_comic_thumbnail_size">72dp</dimen>
+    <dimen name="row_comic_vertical_padding">0dp</dimen>
+    <dimen name="row_comic_horizontal_padding">2dp</dimen>
+
+</resources>

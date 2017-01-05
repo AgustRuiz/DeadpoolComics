@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/row_comic_height"
+    android:layout_margin="0dp"
+    android:background="?android:attr/selectableItemBackground"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/row_comic_vertical_padding"
+    android:paddingEnd="@dimen/row_comic_horizontal_padding"
+    android:paddingStart="@dimen/row_comic_horizontal_padding"
+    android:paddingTop="@dimen/row_comic_vertical_padding">
+
+    <ImageView
+        android:id="@+id/thumbnail"
+        android:layout_width="@dimen/row_comic_thumbnail_size"
+        android:layout_height="@dimen/row_comic_thumbnail_size"
+        android:layout_margin="0dp"
+        android:adjustViewBounds="false"
+        android:padding="0dp"
+        android:src="@mipmap/ic_splash"
+        app:srcCompat="@mipmap/ic_splash" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:paddingBottom="@dimen/row_comic_vertical_padding"
+        android:paddingEnd="@dimen/row_comic_horizontal_padding"
+        android:paddingStart="@dimen/row_comic_horizontal_padding"
+        android:paddingTop="@dimen/row_comic_vertical_padding"
+        android:text="@string/label_title"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+
+</LinearLayout>
