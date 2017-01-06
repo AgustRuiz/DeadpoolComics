@@ -5,6 +5,8 @@ import android.content.Context;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import es.agustruiz.deadpoolcomics.data.internet.MarvelApi;
+
 @Singleton
 public class ComicDataStoreFactory {
 
@@ -25,7 +27,8 @@ public class ComicDataStoreFactory {
     }
 
     public ComicDataStore createCloudDataStore(){
-        return new CloudComicDataStore();
+        MarvelApi marvelApi = new MarvelApi(this.mContext);
+        return new CloudComicDataStore(marvelApi);
     }
 
 }

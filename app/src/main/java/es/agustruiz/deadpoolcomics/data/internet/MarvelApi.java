@@ -1,9 +1,13 @@
 package es.agustruiz.deadpoolcomics.data.internet;
 
+import android.content.Context;
 import android.util.Log;
+
+import javax.inject.Inject;
 
 import es.agustruiz.deadpoolcomics.BuildConfig;
 import es.agustruiz.deadpoolcomics.Utils;
+import es.agustruiz.deadpoolcomics.data.exception.NetworkConnectionException;
 import es.agustruiz.deadpoolcomics.data.model.mapper.ComicMapper;
 import es.agustruiz.deadpoolcomics.data.model.marvel.ComicMarvel;
 import es.agustruiz.deadpoolcomics.data.repository.datasource.ComicDataStore;
@@ -13,7 +17,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public abstract class MarvelApi {
+public class MarvelApi {
 
     private static final String LOG_TAG = Utils.buildLogTag(MarvelApi.class.getSimpleName());
 
@@ -24,24 +28,37 @@ public abstract class MarvelApi {
     private static final String MARVEL_API_PUBLIC_KEY = BuildConfig.MARVEL_API_PUBLIC_KEY;
     private static final String MARVEL_API_PRIVATE_KEY = BuildConfig.MARVEL_API_PRIVATE_KEY;
 
-    public static void GetComicList(final ComicDataStore.ComicListCallback comicListCallback) {
-        long timestamp = System.currentTimeMillis();
-        String hash = getApiHash(timestamp, MARVEL_API_PRIVATE_KEY, MARVEL_API_PUBLIC_KEY);
-        Call<ComicMarvel> call = makeComicService()
-                .getComicsByCharacter(DEADPOOL_ID, timestamp, MARVEL_API_PUBLIC_KEY, hash);
-        Log.d(LOG_TAG, "Calling comics...");
-        call.enqueue(new Callback<ComicMarvel>() {
-            @Override
-            public void onResponse(Call<ComicMarvel> call, Response<ComicMarvel> response) {
-                comicListCallback.onComicListLoaded(
-                        comicMapper.mapComicMarvelToCollection(response.body()));
-            }
+    private Context mContext;
 
-            @Override
-            public void onFailure(Call<ComicMarvel> call, Throwable t) {
-                comicListCallback.onError((Exception) t);
-            }
-        });
+    public MarvelApi(Context context){
+        if(context==null){
+            throw new IllegalArgumentException("Constructor parameters cannot be null");
+        }
+        mContext = context;
+    }
+
+    public void GetComicList(final ComicDataStore.ComicListCallback comicListCallback) {
+        if (Utils.isThereInternetConnection(mContext)) {
+            long timestamp = System.currentTimeMillis();
+            String hash = getApiHash(timestamp, MARVEL_API_PRIVATE_KEY, MARVEL_API_PUBLIC_KEY);
+            Call<ComicMarvel> call = makeComicService()
+                    .getComicsByCharacter(DEADPOOL_ID, timestamp, MARVEL_API_PUBLIC_KEY, hash);
+            Log.d(LOG_TAG, "Calling comics...");
+            call.enqueue(new Callback<ComicMarvel>() {
+                @Override
+                public void onResponse(Call<ComicMarvel> call, Response<ComicMarvel> response) {
+                    comicListCallback.onComicListLoaded(
+                            comicMapper.mapComicMarvelToCollection(response.body()));
+                }
+
+                @Override
+                public void onFailure(Call<ComicMarvel> call, Throwable t) {
+                    comicListCallback.onError((Exception) t);
+                }
+            });
+        } else {
+            comicListCallback.onError(new NetworkConnectionException());
+        }
     }
 
     private static MarvelService makeComicService() {
