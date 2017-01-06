@@ -6,16 +6,4 @@
     android:layout_height="match_parent"
     android:padding="@dimen/splash_padding"
     tools:context="es.agustruiz.deadpoolcomics.presentation.view.activity.SplashActivity">
-
-    <TextView
-        android:id="@+id/splash_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/app_name"
-        android:textAlignment="center"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/splash_text_size" />
-
 </RelativeLayout>

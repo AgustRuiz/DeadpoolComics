@@ -14,7 +14,7 @@ public class CloudComicDataStore implements ComicDataStore {
     }
 
     @Override
-    public void getComicResultMarvelList(ComicListCallback comicListCallback) {
-        mMarvelApi.GetComicList(comicListCallback);
+    public void getComicResultMarvelList(final int limit, final int offset, ComicListCallback comicListCallback) {
+        mMarvelApi.GetComicList(limit, offset, comicListCallback);
     }
 }

@@ -19,7 +19,7 @@ public class ComicResultMarvel {
     private String title;
     @SerializedName("issueNumber")
     @Expose
-    private Integer issueNumber;
+    private Float issueNumber;
     @SerializedName("variantDescription")
     @Expose
     private String variantDescription;
@@ -120,11 +120,11 @@ public class ComicResultMarvel {
         this.title = title;
     }
 
-    public Integer getIssueNumber() {
+    public Float getIssueNumber() {
         return issueNumber;
     }
 
-    public void setIssueNumber(Integer issueNumber) {
+    public void setIssueNumber(Float issueNumber) {
         this.issueNumber = issueNumber;
     }
 

@@ -28,6 +28,8 @@ public class GetComicListUseCaseImpl implements GetComicListUseCase {
                 }
             };
     private Callback mCallback;
+    private int mLimit;
+    private int mOffset;
 
     @Inject
     public GetComicListUseCaseImpl(ComicDomainRepository comicDomainRepository,
@@ -41,11 +43,13 @@ public class GetComicListUseCaseImpl implements GetComicListUseCase {
     //region [GetComicListUseCase methods]
 
     @Override
-    public void execute(Callback callback) {
+    public void execute(final int limit, final int offset, Callback callback) {
         if (callback == null) {
             throw new IllegalArgumentException("Interactor callback cannot be null");
         }
         mCallback = callback;
+        mLimit = limit;
+        mOffset = offset;
         mThreadExecutor.execute(this);
     }
 
@@ -55,7 +59,7 @@ public class GetComicListUseCaseImpl implements GetComicListUseCase {
 
     @Override
     public void run() {
-        mComicDomainRepository.getComicList(repositoryCallback);
+        mComicDomainRepository.getComicList(mLimit, mOffset, repositoryCallback);
     }
 
     //endregion

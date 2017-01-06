@@ -14,5 +14,7 @@
 
     <!-- Tip messages -->
     <string name="tip_errormsg">Error message here</string>
+    <string name="label_cancel">Cancel</string>
+    <string name="errormsg_timeout">The server is delaying responding. Try again</string>
 
 </resources>

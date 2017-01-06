@@ -12,6 +12,6 @@ public interface ComicDomainRepository {
         void onError(ErrorBundle errorBundle);
     }
 
-    void getComicList(ComicListCallback comicListCallback);
+    void getComicList(final int limit, final int offset, ComicListCallback comicListCallback);
 
 }

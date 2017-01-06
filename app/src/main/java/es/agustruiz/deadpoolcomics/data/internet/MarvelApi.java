@@ -37,12 +37,14 @@ public class MarvelApi {
         mContext = context;
     }
 
-    public void GetComicList(final ComicDataStore.ComicListCallback comicListCallback) {
+    public void GetComicList(final int limit, final int offset,
+                             final ComicDataStore.ComicListCallback comicListCallback) {
         if (Utils.isThereInternetConnection(mContext)) {
             long timestamp = System.currentTimeMillis();
             String hash = getApiHash(timestamp, MARVEL_API_PRIVATE_KEY, MARVEL_API_PUBLIC_KEY);
             Call<ComicMarvel> call = makeComicService()
-                    .getComicsByCharacter(DEADPOOL_ID, timestamp, MARVEL_API_PUBLIC_KEY, hash);
+                    .getComicsByCharacter(DEADPOOL_ID, timestamp, MARVEL_API_PUBLIC_KEY, hash,
+                            limit, offset);
             Log.d(LOG_TAG, "Calling comics...");
             call.enqueue(new Callback<ComicMarvel>() {
                 @Override

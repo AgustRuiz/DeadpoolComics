@@ -2,6 +2,8 @@ package es.agustruiz.deadpoolcomics.presentation.exception;
 
 import android.content.Context;
 
+import java.net.SocketTimeoutException;
+
 import es.agustruiz.deadpoolcomics.data.exception.ComicNotFoundException;
 import es.agustruiz.deadpoolcomics.data.exception.NetworkConnectionException;
 import es.agustruiz.deadpoolcomics.R;
@@ -18,8 +20,12 @@ public class ErrorMessageFactory {
             message = context.getString(R.string.errormsg_no_network);
         }else if(exception instanceof ComicNotFoundException){
             message = context.getString(R.string.errormsg_comic_not_found);
+        }else if(exception instanceof SocketTimeoutException){
+            message = context.getString(R.string.errormsg_timeout);
         }else{
-            message = context.getString(R.string.errormsg_generic);
+            //TODO Remove unfriendly info
+            message = String.format("%s: %s", context.getString(R.string.errormsg_generic),
+                    exception.getMessage());
         }
         return message;
     }

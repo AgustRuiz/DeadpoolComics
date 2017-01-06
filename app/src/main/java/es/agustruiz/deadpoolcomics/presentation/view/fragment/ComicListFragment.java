@@ -11,9 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -48,6 +45,11 @@ public class ComicListFragment extends BaseFragment implements ComicListView {
     ComicAdapter mComicAdapter;
     ComicLayoutManager mComicLayoutManager;
 
+
+    private boolean loading = true;
+    int pastVisiblesItems, visibleItemCount, totalItemCount;
+
+
     @BindView(R.id.rl_progress_bar)
     RelativeLayout mRlProgressBar;
 
@@ -81,8 +83,8 @@ public class ComicListFragment extends BaseFragment implements ComicListView {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initialize();
-        loadComicList();
+        initializeComponents();
+        initializeComicList();
     }
 
     //endregion
@@ -145,14 +147,51 @@ public class ComicListFragment extends BaseFragment implements ComicListView {
         mRvComicList.setAdapter(mComicAdapter);
         hideLoading();
         hideError();
+
+
+
+
+        mRvComicList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+                if(dy > 0) //check for scroll down
+                {
+                    visibleItemCount = mComicLayoutManager.getChildCount();
+                    totalItemCount = mComicLayoutManager.getItemCount();
+                    pastVisiblesItems = mComicLayoutManager.findFirstVisibleItemPosition();
+
+//                    if (loading)
+//                    {
+                        if ( (visibleItemCount + pastVisiblesItems) >= totalItemCount)
+                        {
+//                            loading = false;
+                            Log.v(LOG_TAG, "Last Item Wow!");
+                            //Do pagination.. i.e. fetch new data
+                            getMoreComicList();
+                        }
+//                    }
+                }
+
+            }
+        });
+
+
+
+//        Log.d(LOG_TAG, "End of list: let's get next comics...");
+//        getMoreComicList();
+
     }
 
-    private void loadComicList(){
-        Log.d(LOG_TAG, "Load comic list");
+    private void initializeComicList() {
         mComicListPresenter.initialize();
     }
 
-    private void initialize(){
+    private void getMoreComicList() {
+        mComicListPresenter.loadComicList();
+    }
+
+    private void initializeComponents() {
         getComponent(ComicComponent.class).inject(this);
         mComicListPresenter.setView(this);
     }
@@ -162,7 +201,12 @@ public class ComicListFragment extends BaseFragment implements ComicListView {
     @OnClick(R.id.btn_retry)
     protected void OnClickRetry(){
         Log.d(LOG_TAG, "Retry load comic list");
-        loadComicList();
+        getMoreComicList();
+    }
+
+    @OnClick(R.id.btn_cancel)
+    protected void OnClickCancel(){
+        hideError();
     }
 
 }

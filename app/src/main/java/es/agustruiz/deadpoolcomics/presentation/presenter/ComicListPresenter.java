@@ -8,8 +8,6 @@ import java.util.Collection;
 
 import javax.inject.Inject;
 
-import butterknife.OnClick;
-import es.agustruiz.deadpoolcomics.R;
 import es.agustruiz.deadpoolcomics.Utils;
 import es.agustruiz.deadpoolcomics.domain.exception.ErrorBundle;
 import es.agustruiz.deadpoolcomics.domain.interactor.GetComicListUseCase;
@@ -23,25 +21,44 @@ import es.agustruiz.deadpoolcomics.presentation.view.ComicListView;
 @PerActivityScope
 public class ComicListPresenter implements Presenter {
 
+    private static final int LIMIT = 20;
+    private int mOffset = 0;
+
     private static final String LOG_TAG =
             Utils.buildLogTag(ComicListPresenter.class.getSimpleName());
 
     private final GetComicListUseCase mGetComicListUseCase;
     private final ComicDomainToPresentationMapper mComicDomainToPresentationMapper;
     private ComicListView mComicListView;
+    private boolean mLoadingMoreComicList = false;
     private final GetComicListUseCase.Callback comicListCallback = new GetComicListUseCase.Callback() {
         @Override
         public void onComicListLoaded(Collection<ComicDomain> comicDomainCollection) {
             showComicsCollectionInView(comicDomainCollection);
             hideLoading();
+            enableScrollListener();
+            mOffset += comicDomainCollection.size();
         }
 
         @Override
         public void onError(ErrorBundle errorBundle) {
             hideLoading();
+            enableScrollListener();
             showErrorMessage(errorBundle);
         }
     };
+
+    public boolean isLoadingMoreComics() {
+        return mLoadingMoreComicList;
+    }
+
+    private void enableScrollListener() {
+        mLoadingMoreComicList = false;
+    }
+
+    private void disableScrollListener() {
+        mLoadingMoreComicList = true;
+    }
 
     @Inject
     public ComicListPresenter(GetComicListUseCase getComicListUseCase,
@@ -68,10 +85,12 @@ public class ComicListPresenter implements Presenter {
         loadComicList();
     }
 
-    private void loadComicList() {
-        hideErrorMessage();
-        showLoading();
-        getComicList();
+    public void loadComicList() {
+        if (!isLoadingMoreComics()) {
+            hideErrorMessage();
+            showLoading();
+            getComicList(LIMIT, mOffset);
+        }
     }
 
     public void onComicClicked(ComicPresentation comicPresentation) {
@@ -105,9 +124,10 @@ public class ComicListPresenter implements Presenter {
         mComicListView.renderComicList(comicPresentationCollection);
     }
 
-    private void getComicList() {
-        Log.d(LOG_TAG, "Getting comic list...");
-        mGetComicListUseCase.execute(comicListCallback);
+    private void getComicList(final int limit, final int offset) {
+        Log.d(LOG_TAG, String.format("Getting comic list. Limit: %d/ offset: %d", limit, offset));
+        disableScrollListener();
+        mGetComicListUseCase.execute(limit, offset, comicListCallback);
     }
 
 }

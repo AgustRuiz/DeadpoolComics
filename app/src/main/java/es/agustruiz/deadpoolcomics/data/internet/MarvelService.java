@@ -13,7 +13,9 @@ public interface MarvelService {
             @Path("characterId") String characterId,
             @Query("ts") long timestamp,
             @Query("apikey") String apiKey,
-            @Query("hash") String hash
+            @Query("hash") String hash,
+            @Query("limit") int limit,
+            @Query("offset") int offset
     );
 
 }

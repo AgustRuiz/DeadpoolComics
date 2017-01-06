@@ -68,7 +68,7 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
 
     public void setComicCollection(Collection<ComicPresentation> comicCollection){
         validateComicCollection(comicCollection);
-        mComicList = (List<ComicPresentation>) comicCollection;
+        mComicList.addAll(comicCollection);
         this.notifyDataSetChanged();
     }
 

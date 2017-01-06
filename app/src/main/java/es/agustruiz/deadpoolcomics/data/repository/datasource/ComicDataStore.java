@@ -6,7 +6,8 @@ import es.agustruiz.deadpoolcomics.data.model.marvel.ComicResultMarvel;
 
 public interface ComicDataStore {
 
-    void getComicResultMarvelList(ComicListCallback comicListCallback);
+    void getComicResultMarvelList(final int limit, final int offset,
+                                  ComicListCallback comicListCallback);
 
     interface ComicListCallback {
         void onComicListLoaded(Collection<ComicResultMarvel> collection);

@@ -27,9 +27,10 @@ public class ComicDataRepository implements ComicDomainRepository {
 
     //region [ComicDomainRepository methods]
     @Override
-    public void getComicList(final ComicListCallback comicListCallback) {
+    public void getComicList(final int limit, final int offset, final ComicListCallback comicListCallback) {
         final ComicDataStore comicDataStore = mComicDataStoreFactory.create();
-        comicDataStore.getComicResultMarvelList(new ComicDataStore.ComicListCallback() {
+        comicDataStore.getComicResultMarvelList(limit, offset,
+                new ComicDataStore.ComicListCallback() {
             @Override
             public void onComicListLoaded(Collection<ComicResultMarvel> collection) {
                 comicListCallback.onComicListLoaded(mComicMapper.mapComicMarvelToComic(collection));
