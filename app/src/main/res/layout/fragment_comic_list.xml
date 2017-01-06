@@ -15,4 +15,6 @@
 
     <include layout="@layout/progress_bar" />
 
+    <include layout="@layout/error_and_retry" />
+
 </RelativeLayout>

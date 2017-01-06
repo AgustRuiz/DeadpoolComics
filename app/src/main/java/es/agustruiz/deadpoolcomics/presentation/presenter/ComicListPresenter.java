@@ -8,6 +8,8 @@ import java.util.Collection;
 
 import javax.inject.Inject;
 
+import butterknife.OnClick;
+import es.agustruiz.deadpoolcomics.R;
 import es.agustruiz.deadpoolcomics.Utils;
 import es.agustruiz.deadpoolcomics.domain.exception.ErrorBundle;
 import es.agustruiz.deadpoolcomics.domain.interactor.GetComicListUseCase;
@@ -67,6 +69,7 @@ public class ComicListPresenter implements Presenter {
     }
 
     private void loadComicList() {
+        hideErrorMessage();
         showLoading();
         getComicList();
     }
@@ -90,6 +93,10 @@ public class ComicListPresenter implements Presenter {
         String errorMsg = ErrorMessageFactory.create(mComicListView.context(),
                 errorBundle.getException());
         mComicListView.showError(errorMsg);
+    }
+
+    private void hideErrorMessage(){
+        mComicListView.hideError();
     }
 
     private void showComicsCollectionInView(Collection<ComicDomain> comicDomainCollection) {

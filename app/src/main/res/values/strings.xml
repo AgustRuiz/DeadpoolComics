@@ -5,10 +5,14 @@
 
     <!-- Title labels -->
     <string name="label_title">Title</string>
+    <string name="label_retry">Retry</string>
 
     <!-- Error messages -->
     <string name="errormsg_generic">Application error</string>
     <string name="errormsg_no_network">There is no internet connection</string>
     <string name="errormsg_comic_not_found">Comic not found</string>
+
+    <!-- Tip messages -->
+    <string name="tip_errormsg">Error message here</string>
 
 </resources>

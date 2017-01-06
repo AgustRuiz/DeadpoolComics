@@ -10,6 +10,8 @@ public interface LoadDataView {
 
     void showError(String message);
 
+    void hideError();
+
     Context context();
 
 }

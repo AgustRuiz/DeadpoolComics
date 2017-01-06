@@ -10,7 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,11 +22,11 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import es.agustruiz.deadpoolcomics.R;
 import es.agustruiz.deadpoolcomics.Utils;
 import es.agustruiz.deadpoolcomics.presentation.di.component.ComicComponent;
 import es.agustruiz.deadpoolcomics.presentation.model.ComicPresentation;
-import es.agustruiz.deadpoolcomics.presentation.navigator.Navigator;
 import es.agustruiz.deadpoolcomics.presentation.presenter.ComicListPresenter;
 import es.agustruiz.deadpoolcomics.presentation.view.ComicListView;
 import es.agustruiz.deadpoolcomics.presentation.view.adapter.ComicAdapter;
@@ -47,6 +50,12 @@ public class ComicListFragment extends BaseFragment implements ComicListView {
 
     @BindView(R.id.rl_progress_bar)
     RelativeLayout mRlProgressBar;
+
+    @BindView(R.id.rl_error_and_retry)
+    RelativeLayout mRlErrorAndRetry;
+
+    @BindView(R.id.tv_error)
+    TextView mTvError;
 
     private ComicListListener mComicListListener;
 
@@ -92,7 +101,13 @@ public class ComicListFragment extends BaseFragment implements ComicListView {
 
     @Override
     public void showError(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        mTvError.setText(message);
+        mRlErrorAndRetry.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideError(){
+        mRlErrorAndRetry.setVisibility(View.GONE);
     }
 
     @Override
@@ -128,6 +143,8 @@ public class ComicListFragment extends BaseFragment implements ComicListView {
         mRvComicList.setLayoutManager(mComicLayoutManager);
         mComicAdapter = new ComicAdapter(getContext(), new ArrayList<ComicPresentation>());
         mRvComicList.setAdapter(mComicAdapter);
+        hideLoading();
+        hideError();
     }
 
     private void loadComicList(){
@@ -141,5 +158,11 @@ public class ComicListFragment extends BaseFragment implements ComicListView {
     }
 
     //endregion
+
+    @OnClick(R.id.btn_retry)
+    protected void OnClickRetry(){
+        Log.d(LOG_TAG, "Retry load comic list");
+        loadComicList();
+    }
 
 }
