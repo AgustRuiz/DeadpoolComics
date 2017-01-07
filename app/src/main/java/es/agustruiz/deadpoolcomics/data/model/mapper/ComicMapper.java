@@ -24,6 +24,12 @@ public class ComicMapper {
         for (ComicResultMarvel item : comicMarvel) {
             ComicDomain comicDomain = new ComicDomain();
             comicDomain.setTitle(item.getTitle());
+            if (item.getThumbnailMarvel() != null) {
+                comicDomain.setImageUrl(String.format("%s.%s", item.getThumbnailMarvel().getPath(),
+                        item.getThumbnailMarvel().getExtension()));
+            } else {
+                comicDomain.setImageUrl(null);
+            }
             output.add(comicDomain);
         }
         return output;

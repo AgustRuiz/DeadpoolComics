@@ -45,10 +45,7 @@ public class ComicListFragment extends BaseFragment implements ComicListView {
     ComicAdapter mComicAdapter;
     ComicLayoutManager mComicLayoutManager;
 
-
-    private boolean loading = true;
     int pastVisiblesItems, visibleItemCount, totalItemCount;
-
 
     @BindView(R.id.rl_progress_bar)
     RelativeLayout mRlProgressBar;
@@ -147,40 +144,20 @@ public class ComicListFragment extends BaseFragment implements ComicListView {
         mRvComicList.setAdapter(mComicAdapter);
         hideLoading();
         hideError();
-
-
-
-
         mRvComicList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-
-                if(dy > 0) //check for scroll down
+                if (dy > 0)
                 {
                     visibleItemCount = mComicLayoutManager.getChildCount();
                     totalItemCount = mComicLayoutManager.getItemCount();
                     pastVisiblesItems = mComicLayoutManager.findFirstVisibleItemPosition();
-
-//                    if (loading)
-//                    {
-                        if ( (visibleItemCount + pastVisiblesItems) >= totalItemCount)
-                        {
-//                            loading = false;
-                            Log.v(LOG_TAG, "Last Item Wow!");
-                            //Do pagination.. i.e. fetch new data
-                            getMoreComicList();
-                        }
-//                    }
+                    if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                        getMoreComicList();
+                    }
                 }
-
             }
         });
-
-
-
-//        Log.d(LOG_TAG, "End of list: let's get next comics...");
-//        getMoreComicList();
-
     }
 
     private void initializeComicList() {

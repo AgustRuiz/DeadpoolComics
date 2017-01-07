@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -50,7 +52,9 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
     public void onBindViewHolder(ComicViewHolder holder, int position) {
         final ComicPresentation comicPresentation = mComicList.get(position);
         holder.tvTitle.setText(comicPresentation.getTitle());
-        //TODO Set thumbnail
+        if (comicPresentation.getImageUrl() != null) {
+            Picasso.with(mContext).load(comicPresentation.getImageUrl()).into(holder.ivThumbnail);
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -77,7 +77,7 @@ public class ComicResultMarvel {
     @SerializedName("prices")
     @Expose
     private List<PriceMarvel> priceMarvels = null;
-    @SerializedName("thumbnails")
+    @SerializedName("thumbnail")
     @Expose
     private ThumbnailMarvel thumbnailMarvel;
     @SerializedName("images")
