@@ -2,7 +2,6 @@ package es.agustruiz.deadpoolcomics.presentation.presenter;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.Collection;
 
@@ -14,7 +13,7 @@ import es.agustruiz.deadpoolcomics.domain.interactor.GetComicListUseCase;
 import es.agustruiz.deadpoolcomics.domain.model.ComicDomain;
 import es.agustruiz.deadpoolcomics.presentation.di.scope.PerActivityScope;
 import es.agustruiz.deadpoolcomics.presentation.exception.ErrorMessageFactory;
-import es.agustruiz.deadpoolcomics.presentation.mapper.ComicDomainToPresentationMapper;
+import es.agustruiz.deadpoolcomics.presentation.model.mapper.ComicDomainToPresentationMapper;
 import es.agustruiz.deadpoolcomics.presentation.model.ComicPresentation;
 import es.agustruiz.deadpoolcomics.presentation.view.ComicListView;
 
@@ -95,9 +94,11 @@ public class ComicListPresenter implements Presenter {
 
     public void onComicClicked(ComicPresentation comicPresentation) {
         //TODO
-        Toast.makeText(mComicListView.context(),
-                String.format("GO TO %s", comicPresentation.getTitle()),
-                Toast.LENGTH_SHORT).show();
+        mComicListView.viewComic(comicPresentation);
+
+//        Toast.makeText(mComicListView.context(),
+//                String.format("GO TO %s", comicPresentation.getTitle()),
+//                Toast.LENGTH_SHORT).show();
     }
 
     private void showLoading() {

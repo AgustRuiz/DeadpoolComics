@@ -18,4 +18,11 @@ public interface MarvelService {
             @Query("offset") int offset
     );
 
+    @GET("comics/{comicId}")
+    Call<ComicMarvel> getComicById(
+            @Path("comicId") int comicId,
+            @Query("ts") long timestamp,
+            @Query("apikey") String apiKey,
+            @Query("hash") String hash);
+
 }

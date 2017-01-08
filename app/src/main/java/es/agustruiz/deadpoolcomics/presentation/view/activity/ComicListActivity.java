@@ -20,8 +20,7 @@ import es.agustruiz.deadpoolcomics.presentation.presenter.ComicListPresenter;
 import es.agustruiz.deadpoolcomics.presentation.view.fragment.ComicListFragment;
 
 public class ComicListActivity extends BaseActivity implements HasComponent<ComicComponent>,
-        ComicListFragment.ComicListListener
-{
+        ComicListFragment.ComicListListener {
 
     private static final String LOG_TAG = ComicListActivity.class.getSimpleName()+ Utils.AGUST_TAG;
 
@@ -81,7 +80,7 @@ public class ComicListActivity extends BaseActivity implements HasComponent<Comi
 
     @Override
     public void onComicClick(ComicPresentation comicPresentation) {
-        Log.d(LOG_TAG, String.format("onComicClick: %s", comicPresentation.getTitle()));
+        navigator.goToComicDetails(this, comicPresentation.getId());
     }
 
     //endregion

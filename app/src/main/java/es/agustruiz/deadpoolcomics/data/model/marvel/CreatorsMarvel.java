@@ -14,7 +14,7 @@ public class CreatorsMarvel {
     @SerializedName("collectionURI")
     @Expose
     private String collectionURI;
-    @SerializedName("itemMarvels")
+    @SerializedName("items")
     @Expose
     private List<ItemMarvel> itemMarvels = null;
     @SerializedName("returned")

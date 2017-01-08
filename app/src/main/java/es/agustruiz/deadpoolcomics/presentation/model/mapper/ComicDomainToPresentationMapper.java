@@ -1,4 +1,4 @@
-package es.agustruiz.deadpoolcomics.presentation.mapper;
+package es.agustruiz.deadpoolcomics.presentation.model.mapper;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,8 +20,12 @@ public class ComicDomainToPresentationMapper {
 
     public ComicPresentation map(ComicDomain comicDomain) {
         ComicPresentation comicPresentation = new ComicPresentation();
+        comicPresentation.setId(comicDomain.getId());
         comicPresentation.setTitle(comicDomain.getTitle());
         comicPresentation.setImageUrl(comicDomain.getImageUrl());
+        comicPresentation.setPublished(comicDomain.getPublished());
+        comicPresentation.setCreators(comicDomain.getCreators());
+        comicPresentation.setDescription(comicDomain.getDescription());
         return comicPresentation;
     }
 

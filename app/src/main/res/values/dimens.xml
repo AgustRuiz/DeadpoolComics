@@ -2,6 +2,7 @@
     <!-- General activity dimensions -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_padding">12dp</dimen>
 
     <!-- Splash activity dimensions -->
     <dimen name="splash_padding">72dp</dimen>
@@ -14,5 +15,14 @@
     <dimen name="row_comic_thumbnail_size">72dp</dimen>
     <dimen name="row_comic_vertical_padding">0dp</dimen>
     <dimen name="row_comic_horizontal_padding">2dp</dimen>
+
+
+
+    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+    <dimen name="caption_margin_top">6sp</dimen>
+
+    <dimen name="comic_cover_margin">12dp</dimen>
 
 </resources>

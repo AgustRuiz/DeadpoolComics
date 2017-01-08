@@ -1,9 +1,6 @@
 package es.agustruiz.deadpoolcomics.data.internet;
 
 import android.content.Context;
-import android.util.Log;
-
-import javax.inject.Inject;
 
 import es.agustruiz.deadpoolcomics.BuildConfig;
 import es.agustruiz.deadpoolcomics.Utils;
@@ -30,6 +27,8 @@ public class MarvelApi {
 
     private Context mContext;
 
+    //region [Public methods]
+
     public MarvelApi(Context context){
         if(context==null){
             throw new IllegalArgumentException("Constructor parameters cannot be null");
@@ -45,7 +44,6 @@ public class MarvelApi {
             Call<ComicMarvel> call = makeComicService()
                     .getComicsByCharacter(DEADPOOL_ID, timestamp, MARVEL_API_PUBLIC_KEY, hash,
                             limit, offset);
-            Log.d(LOG_TAG, "Calling comics...");
             call.enqueue(new Callback<ComicMarvel>() {
                 @Override
                 public void onResponse(Call<ComicMarvel> call, Response<ComicMarvel> response) {
@@ -63,6 +61,43 @@ public class MarvelApi {
         }
     }
 
+    public void GetComicById(final int comicId,
+                             final ComicDataStore.ComicDetailsCallback comicDetailsCallback) {
+        if (Utils.isThereInternetConnection(mContext)) {
+            long timestamp = System.currentTimeMillis();
+            String hash = getApiHash(timestamp, MARVEL_API_PRIVATE_KEY, MARVEL_API_PUBLIC_KEY);
+            Call<ComicMarvel> call = makeComicService()
+                    .getComicById(comicId, timestamp, MARVEL_API_PUBLIC_KEY, hash);
+            call.enqueue(new Callback<ComicMarvel>() {
+                @Override
+                public void onResponse(Call<ComicMarvel> call, Response<ComicMarvel> response) {
+                    switch (response.code()) {
+                        case 200:
+                            comicDetailsCallback.onComicDetailsLoaded(
+                                    comicMapper.mapComicMarvelToCollection(response.body()));
+                            break;
+                        default:
+                            comicDetailsCallback.onError(new Exception(response.message()));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ComicMarvel> call, Throwable t) {
+                    comicDetailsCallback.onError((Exception) t);
+                }
+            });
+
+
+        } else {
+            comicDetailsCallback.onError(new NetworkConnectionException());
+        }
+    }
+
+
+    //endregion
+
+    //region [Private methods]
+
     private static MarvelService makeComicService() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -74,5 +109,7 @@ public class MarvelApi {
     private static String getApiHash(long timestamp, String privateKey, String publicKey) {
         return Utils.md5(timestamp + privateKey + publicKey);
     }
+
+    //endregion
 
 }

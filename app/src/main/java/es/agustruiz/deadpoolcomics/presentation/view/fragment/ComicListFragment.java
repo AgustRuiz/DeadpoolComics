@@ -38,7 +38,7 @@ public class ComicListFragment extends BaseFragment implements ComicListView {
     }
 
     @Inject
-    ComicListPresenter mComicListPresenter;
+    ComicListPresenter mPresenter;
 
     @BindView(R.id.rv_comic_list)
     RecyclerView mRvComicList;
@@ -123,6 +123,12 @@ public class ComicListFragment extends BaseFragment implements ComicListView {
     public void renderComicList(Collection<ComicPresentation> comicPresentationCollection) {
         if (comicPresentationCollection != null) {
             mComicAdapter.setComicCollection(comicPresentationCollection);
+            mComicAdapter.setOnComicClickListener(new ComicAdapter.OnComicClickListener() {
+                @Override
+                public void onComicItemClicked(ComicPresentation comicModelPresentation) {
+                    mPresenter.onComicClicked(comicModelPresentation);
+                }
+            });
         }
     }
 
@@ -161,16 +167,16 @@ public class ComicListFragment extends BaseFragment implements ComicListView {
     }
 
     private void initializeComicList() {
-        mComicListPresenter.initialize();
+        mPresenter.initialize();
     }
 
     private void getMoreComicList() {
-        mComicListPresenter.loadComicList();
+        mPresenter.loadComicList();
     }
 
     private void initializeComponents() {
         getComponent(ComicComponent.class).inject(this);
-        mComicListPresenter.setView(this);
+        mPresenter.setView(this);
     }
 
     //endregion

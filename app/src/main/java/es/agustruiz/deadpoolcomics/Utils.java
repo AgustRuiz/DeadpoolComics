@@ -22,26 +22,26 @@ public class Utils {
 
     public static List<ComicPresentation> getTestComicList() {
         List<ComicPresentation> comicList = new ArrayList<>();
-        comicList.add(new ComicPresentation("Uno", null));
-        comicList.add(new ComicPresentation("Dos", null));
-        comicList.add(new ComicPresentation("Tres", null));
-        comicList.add(new ComicPresentation("Cuatro", null));
-        comicList.add(new ComicPresentation("Cinco", null));
-        comicList.add(new ComicPresentation("Seis", null));
-        comicList.add(new ComicPresentation("Siete", null));
-        comicList.add(new ComicPresentation("Ocho", null));
-        comicList.add(new ComicPresentation("Nueve", null));
-        comicList.add(new ComicPresentation("Diez", null));
-        comicList.add(new ComicPresentation("Once", null));
-        comicList.add(new ComicPresentation("Doce", null));
-        comicList.add(new ComicPresentation("Trece", null));
-        comicList.add(new ComicPresentation("Catorce", null));
-        comicList.add(new ComicPresentation("Quince", null));
-        comicList.add(new ComicPresentation("Dieciseis", null));
-        comicList.add(new ComicPresentation("Diecisiete", null));
-        comicList.add(new ComicPresentation("Dieciocho", null));
-        comicList.add(new ComicPresentation("Diecinueve", null));
-        comicList.add(new ComicPresentation("Veinte", null));
+        comicList.add(new ComicPresentation(1, "Uno", null));
+        comicList.add(new ComicPresentation(2, "Dos", null));
+        comicList.add(new ComicPresentation(3, "Tres", null));
+        comicList.add(new ComicPresentation(4, "Cuatro", null));
+        comicList.add(new ComicPresentation(5, "Cinco", null));
+        comicList.add(new ComicPresentation(6, "Seis", null));
+        comicList.add(new ComicPresentation(7, "Siete", null));
+        comicList.add(new ComicPresentation(8, "Ocho", null));
+        comicList.add(new ComicPresentation(9, "Nueve", null));
+        comicList.add(new ComicPresentation(10, "Diez", null));
+        comicList.add(new ComicPresentation(11, "Once", null));
+        comicList.add(new ComicPresentation(12, "Doce", null));
+        comicList.add(new ComicPresentation(13, "Trece", null));
+        comicList.add(new ComicPresentation(14, "Catorce", null));
+        comicList.add(new ComicPresentation(15, "Quince", null));
+        comicList.add(new ComicPresentation(16, "Dieciseis", null));
+        comicList.add(new ComicPresentation(17, "Diecisiete", null));
+        comicList.add(new ComicPresentation(18, "Dieciocho", null));
+        comicList.add(new ComicPresentation(19, "Diecinueve", null));
+        comicList.add(new ComicPresentation(20, "Veinte", null));
         return comicList;
     }
 
@@ -69,6 +69,17 @@ public class Utils {
             e.printStackTrace();
         }
         return "";
+    }
+
+    public static final String stringJoiner(String separator, List<String> collection) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < collection.size(); ++i) {
+            sb.append(collection.get(i));
+            if (i < collection.size() - 1){
+                sb.append(separator);
+            }
+        }
+        return sb.toString();
     }
 
 }

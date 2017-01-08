@@ -8,19 +8,19 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import es.agustruiz.deadpoolcomics.Utils;
+import es.agustruiz.deadpoolcomics.presentation.model.ComicPresentation;
 import es.agustruiz.deadpoolcomics.presentation.view.activity.BaseActivity;
+import es.agustruiz.deadpoolcomics.presentation.view.activity.ComicDetailsActivity;
 import es.agustruiz.deadpoolcomics.presentation.view.activity.ComicListActivity;
 
 @Singleton
 public class Navigator {
 
-    private static final String LOG_TAG = Navigator.class.getSimpleName()+ Utils.AGUST_TAG;
+//    private static final String LOG_TAG = Navigator.class.getSimpleName()+ Utils.AGUST_TAG;
 
     @Inject
     public void Navigator(){
         // Empty
-        Log.d(LOG_TAG, "Empty constructor");
-
     }
 
     public void goToComicList(Context context){
@@ -29,7 +29,10 @@ public class Navigator {
         }
     }
 
-    public void goBack(BaseActivity activity){
-        activity.finish();
+    public void goToComicDetails(Context context, int comicId){
+        if (context != null) {
+            context.startActivity(ComicDetailsActivity.getCallingIntent(context, comicId));
+        }
     }
+
 }
