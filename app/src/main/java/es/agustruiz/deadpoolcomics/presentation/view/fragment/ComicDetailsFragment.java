@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +26,7 @@ import es.agustruiz.deadpoolcomics.presentation.model.ComicPresentation;
 import es.agustruiz.deadpoolcomics.presentation.presenter.ComicDetailsPresenter;
 import es.agustruiz.deadpoolcomics.presentation.view.ComicDetailsView;
 import es.agustruiz.deadpoolcomics.presentation.view.activity.BaseActivity;
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class ComicDetailsFragment extends BaseFragment implements ComicDetailsView {
 
@@ -51,14 +51,19 @@ public class ComicDetailsFragment extends BaseFragment implements ComicDetailsVi
 
     @BindView(R.id.tv_title)
     TextView mTvTitle;
+
     @BindView(R.id.tv_published)
     TextView mTvPublished;
+
     @BindView(R.id.tv_creators)
     TextView mTvCreators;
+
     @BindView(R.id.tv_description)
     TextView mTvDescription;
+
     @BindView(R.id.iv_comic_cover)
     ImageView mIvComicCover;
+    PhotoViewAttacher mPhotoViewAttacher;
 
     @Inject
     ComicDetailsPresenter mPresenter;
@@ -98,6 +103,7 @@ public class ComicDetailsFragment extends BaseFragment implements ComicDetailsVi
         mTvDescription.setText(comicPresentation.getDescription());
 
         Picasso.with(context()).load(comicPresentation.getImageUrl()).into(mIvComicCover);
+        mPhotoViewAttacher = new PhotoViewAttacher(mIvComicCover);
     }
 
     //endregion

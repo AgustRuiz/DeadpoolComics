@@ -23,6 +23,7 @@
     <dimen name="text_margin">16dp</dimen>
     <dimen name="caption_margin_top">6sp</dimen>
 
-    <dimen name="comic_cover_margin">12dp</dimen>
+    <dimen name="comic_cover_margin_horizontal">16dp</dimen>
+    <dimen name="comic_cover_margin_vertical">12dp</dimen>
 
 </resources>

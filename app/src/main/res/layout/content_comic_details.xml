@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/activity_padding"
+    android:paddingStart="@dimen/activity_padding"
+    android:paddingEnd="@dimen/activity_padding"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="es.agustruiz.deadpoolcomics.presentation.view.activity.ComicDetailsActivity"
     tools:showIn="@layout/activity_comic_details">
@@ -81,12 +82,15 @@
             android:layout_marginTop="@dimen/caption_margin_top"
             android:text="@string/label_cover"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
-        
+
         <ImageView
             android:id="@+id/iv_comic_cover"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            />
+            android:layout_marginStart="@dimen/comic_cover_margin_horizontal"
+            android:layout_marginEnd="@dimen/comic_cover_margin_horizontal"
+            android:layout_marginTop="@dimen/comic_cover_margin_vertical"
+            android:layout_marginBottom="@dimen/comic_cover_margin_vertical" />
 
     </android.support.v7.widget.LinearLayoutCompat>
 
